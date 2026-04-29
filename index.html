@@ -11,13 +11,29 @@
             0%, 100% { transform: scale(1); }
             50% { transform: scale(1.05); }
         }
+        
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        
+        .transform-style-preserve-3d {
+            transform-style: preserve-3d;
+        }
+        
+        .flipped {
+            transform: rotateY(180deg);
+        }
     </style>
 </head>
 <body class="body-font bg-gray-50">
     <!-- Hero Section -->
     <header class="relative min-h-screen bg-gradient-to-br from-blue-900 via-blue-800 to-blue-950 text-white overflow-hidden">
         <!-- Background Logo -->
-        <div class="absolute inset-0 opacity-80">
+        <div class="absolute top-32 left-0 right-0 h-96 opacity-80">
             <img src="assets/GranbyLogo.png" alt="Granby Logo Background" 
                  class="w-full h-full object-contain opacity-20">
         </div>
@@ -68,6 +84,25 @@
                         Scroll to explore
                     </p>
                 </div>
+
+                <div class="relative w-1/2 max-w-md mx-auto" style="perspective: 1000px; min-height: 300px;">
+                    <div id="idCard" class="relative w-full transition-transform duration-700 transform-style-preserve-3d" style="height: 300px;">
+                        <!-- Front of ID Card -->
+                        <div class="absolute inset-0 backface-hidden">
+                            <img src="assets/ID/front.png" alt="ID Card Front" class="w-full h-full object-contain rounded-lg shadow-2xl" style="display: block;">
+                        </div>
+                        <!-- Back of ID Card -->
+                        <div class="absolute inset-0 backface-hidden rotate-y-180">
+                            <img src="assets/ID/back.png" alt="ID Card Back" class="w-full h-full object-contain rounded-lg shadow-2xl" style="display: block;">
+                        </div>
+                    </div>
+                </div>
+                <button onclick="flipIdCard()" class="mt-6 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl" style="margin-bottom: 3rem;">
+                    <svg class="w-5 h-5 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    Flip ID Card
+                </button>
             </div>
         </div>
     </header>
@@ -87,7 +122,7 @@
             <!-- Photos will be dynamically loaded here -->
         </div>
         
-        <div class="text-center mt-8">
+        <div class="text-center mt-8 mb-0">
             <a href="assets/ppt/PIAMIS Symposium.pptx" download class="inline-flex items-center px-8 py-4 bg-green-700 hover:bg-green-800 text-white font-bold rounded-xl shadow-xl hover:shadow-2xl transition-all duration-300 animate-pulse transform hover:scale-110" style="animation: breathe 2s ease-in-out infinite;">
                 <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
@@ -98,7 +133,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-blue-900 text-white py-8 px-4 mt-16">
+    <footer class="bg-blue-900 text-white py-8 px-4 mt-0">
         <div class="container mx-auto text-center">
             <p class="text-white">
                 Static website made by PIAMIS developer
@@ -109,6 +144,12 @@
     <script>
         let currentPhotoIndex = 0;
         const photos = [];
+        
+        // Flip ID Card function
+        function flipIdCard() {
+            const idCard = document.getElementById('idCard');
+            idCard.classList.toggle('flipped');
+        }
         
         // Initialize photo gallery
         function initGallery() {
